@@ -1,0 +1,6 @@
+{Ashley:
+
+Implementação do arquivo Models.py
+Implementação do arquivo Database.py
+Implementação do .env
+Implementação do povoar.py}
