@@ -2,6 +2,8 @@ from fastapi import APIRouter, HTTPException, Depends
 from sqlmodel import Session, select
 from Database.Database import get_session
 from Database.Models import Palestrante
+from uuid import UUID, uuid4
+
 
 router = APIRouter()
 
@@ -22,7 +24,7 @@ def listar_palestrantes(session: Session = Depends(get_session), limit: int = 10
 
 
 @router.get("/{palestrante_id}", response_model=Palestrante)
-def obter_palestrante(palestrante_id: int, session: Session = Depends(get_session)):
+def obter_palestrante(palestrante_id: UUID, session: Session = Depends(get_session)):
     palestrante = session.get(Palestrante, palestrante_id)
     if not palestrante:
         raise HTTPException(status_code=404, detail="Palestrante não encontrado")
@@ -30,7 +32,7 @@ def obter_palestrante(palestrante_id: int, session: Session = Depends(get_sessio
 
 
 @router.put("/{palestrante_id}", response_model=Palestrante)
-def atualizar_palestrante(palestrante_id: int, palestrante: Palestrante, session: Session = Depends(get_session)):
+def atualizar_palestrante(palestrante_id: UUID, palestrante: Palestrante, session: Session = Depends(get_session)):
     db_palestrante = session.get(Palestrante, palestrante_id)
     if not db_palestrante:
         raise HTTPException(status_code=404, detail="Palestrante não encontrado")
@@ -43,7 +45,7 @@ def atualizar_palestrante(palestrante_id: int, palestrante: Palestrante, session
 
 
 @router.delete("/{palestrante_id}")
-def deletar_palestrante(palestrante_id: int, session: Session = Depends(get_session)):
+def deletar_palestrante(palestrante_id: UUID, session: Session = Depends(get_session)):
     palestrante = session.get(Palestrante, palestrante_id)
     if not palestrante:
         raise HTTPException(status_code=404, detail="Palestrante não encontrado")

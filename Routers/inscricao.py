@@ -2,12 +2,16 @@ from fastapi import APIRouter, HTTPException, Depends
 from sqlmodel import Session, select
 from Database.Database import get_session
 from Database.Models import Inscricao
+from uuid import UUID, uuid4
+
 
 router = APIRouter()
 
 
 @router.post("/", response_model=Inscricao)
 def criar_inscricao(inscricao: Inscricao, session: Session = Depends(get_session)):
+    inscricao.evento_id = UUID(inscricao.evento_id)
+    inscricao.participante_id = UUID(inscricao.participante_id)
     session.add(inscricao)
     session.commit()
     session.refresh(inscricao)
@@ -22,7 +26,7 @@ def listar_inscricoes(session: Session = Depends(get_session), limit: int = 10, 
 
 
 @router.get("/{inscricao_id}", response_model=Inscricao)
-def obter_inscricao(inscricao_id: int, session: Session = Depends(get_session)):
+def obter_inscricao(inscricao_id: UUID, session: Session = Depends(get_session)):
     inscricao = session.get(Inscricao, inscricao_id)
     if not inscricao:
         raise HTTPException(status_code=404, detail="Inscricao não encontrada")
@@ -30,7 +34,7 @@ def obter_inscricao(inscricao_id: int, session: Session = Depends(get_session)):
 
 
 @router.put("/{inscricao_id}", response_model=Inscricao)
-def atualizar_inscricao(inscricao_id: int, inscricao: Inscricao, session: Session = Depends(get_session)):
+def atualizar_inscricao(inscricao_id: UUID, inscricao: Inscricao, session: Session = Depends(get_session)):
     db_inscricao = session.get(Inscricao, inscricao_id)
     if not db_inscricao:
         raise HTTPException(status_code=404, detail="Inscricao não encontrada")
@@ -43,7 +47,7 @@ def atualizar_inscricao(inscricao_id: int, inscricao: Inscricao, session: Sessio
 
 
 @router.delete("/{inscricao_id}")
-def deletar_inscricao(inscricao_id: int, session: Session = Depends(get_session)):
+def deletar_inscricao(inscricao_id: UUID, session: Session = Depends(get_session)):
     inscricao = session.get(Inscricao, inscricao_id)
     if not inscricao:
         raise HTTPException(status_code=404, detail="Inscricao não encontrada")
