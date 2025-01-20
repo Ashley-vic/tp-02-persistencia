@@ -27,16 +27,6 @@ class Participante(SQLModel, table=True):
     inscricoes: List["Inscricao"] = Relationship(back_populates="participante")
 
 
-class Palestrante(SQLModel, table=True):
-    id: UUID = Field(default_factory=uuid4, primary_key=True)
-    nome: str = Field(..., max_length=100)
-    email: str = Field(..., max_length=100, unique=True)
-    biografia: str = Field(..., max_length=500)
-
-    # Relacionamento com Sessão
-    sessoes: List["Sessao"] = Relationship(back_populates="palestrante")
-
-
 class Sessao(SQLModel, table=True):
     id: UUID = Field(default_factory=uuid4, primary_key=True)
     nome: str = Field(..., max_length=150)
@@ -46,7 +36,17 @@ class Sessao(SQLModel, table=True):
 
     # Relacionamentos
     evento: Optional[Evento] = Relationship(back_populates="sessoes")
-    palestrante: Optional[Palestrante] = Relationship(back_populates="sessoes")
+    palestrante: Optional["Palestrante"] = Relationship(back_populates="sessoes")
+
+
+class Palestrante(SQLModel, table=True):
+    id: UUID = Field(default_factory=uuid4, primary_key=True)
+    nome: str = Field(..., max_length=100)
+    email: str = Field(..., max_length=100, unique=True)
+    biografia: str = Field(..., max_length=500)
+
+    # Relacionamento com Sessão
+    sessoes: List["Sessao"] = Relationship(back_populates="palestrante")
 
 
 class Inscricao(SQLModel, table=True):
