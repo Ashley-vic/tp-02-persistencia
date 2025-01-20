@@ -1,12 +1,12 @@
 from datetime import datetime, date
-from database import create_db_and_tables, get_session
-from models import Evento, Sessao, Palestrante, Participante, Inscricao
+from Database import create_db_and_tables, get_session
+from Models import Evento, Palestrante, Participante, Sessao, Inscricao
 from uuid import uuid4
 
 
 def populate_database():
     with get_session() as session:
-        # Criar 10 eventos realistas
+        
         eventos = [
             Evento(
                 nome="Semana da Computação",
@@ -82,7 +82,7 @@ def populate_database():
         session.add_all(eventos)
         session.commit()
 
-        # Criar 10 palestrantes realistas
+        
         palestrantes = [
             Palestrante(nome="Carlos Eduardo", email="carlos.eduardo@tech.com", biografia="Engenheiro de software com 10 anos de experiência em IA."),
             Palestrante(nome="Mariana Souza", email="mariana.souza@dev.com", biografia="Especialista em desenvolvimento web e palestrante internacional."),
@@ -98,7 +98,6 @@ def populate_database():
         session.add_all(palestrantes)
         session.commit()
 
-        # Criar 10 participantes realistas
         participantes = [
             Participante(nome="Lucas Silva", email="lucas.silva@example.com", instituicao="Universidade Federal de Tecnologia"),
             Participante(nome="Beatriz Santos", email="beatriz.santos@example.com", instituicao="Instituto de Tecnologia e Inovação"),
@@ -114,7 +113,6 @@ def populate_database():
         session.add_all(participantes)
         session.commit()
 
-        # Criar 10 sessões, associadas a eventos e palestrantes
         sessoes = [
             Sessao(nome="Introdução à IA", data_hora=datetime(2025, 3, 10, 9, 0), evento_id=eventos[0].id, palestrante_id=palestrantes[0].id),
             Sessao(nome="Redes de Computadores Avançadas", data_hora=datetime(2025, 7, 15, 14, 0), evento_id=eventos[4].id, palestrante_id=palestrantes[6].id),
@@ -126,7 +124,6 @@ def populate_database():
         session.add_all(sessoes)
         session.commit()
 
-        # Criar 10 inscrições, associadas a participantes e eventos
         inscricoes = [
             Inscricao(evento_id=eventos[0].id, participante_id=participantes[0].id),
             Inscricao(evento_id=eventos[1].id, participante_id=participantes[1].id),
