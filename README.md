@@ -14,7 +14,7 @@ Antes de começar, verifique se você atendeu aos seguintes requisitos:
 
 ## 🚀 Instalando Gerenciador de Eventos Acadêmicos
 
-Para instalar o Gerenciador de Eventos Acadêmicos, siga estas etapas:
+Para baixar o reposiótio o Gerenciador de Eventos Acadêmicos, siga estas etapas:
 
 ```
 git clone <link do repositório>
