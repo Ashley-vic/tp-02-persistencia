@@ -1,6 +1,6 @@
 # Sistema de Gerenciamento de Eventos Acadêmicos
 
-<img src="" alt="">
+<img src="Captura de imagem_20250120_120923.png" alt="Modelagem de Relacionamentos">
 
 > O projeto é um sistema de gerenciamento de eventos acadêmicos, utilizando FastAPI, SQLModel e focado na desenvoltura acadêmica.
 
